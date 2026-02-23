@@ -72,6 +72,25 @@
         .navbar-cta:hover { background: var(--secondary-light); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(182,141,64,0.4); }
         .navbar.scrolled .navbar-cta { background: var(--primary); }
         .navbar.scrolled .navbar-cta:hover { background: var(--primary-light); }
+        .navbar-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+        #lang-select {
+            appearance: none; -webkit-appearance: none;
+            background: rgba(255,255,255,0.15) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='white' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 12px center;
+            border: 1px solid rgba(255,255,255,0.4); border-radius: 50px;
+            padding: 7px 32px 7px 14px; font-size: 0.82rem; font-family: 'Inter', sans-serif;
+            color: var(--white); cursor: pointer; transition: all 0.3s ease;
+            backdrop-filter: blur(8px); outline: none; font-weight: 500;
+        }
+        .navbar.scrolled #lang-select {
+            background-color: rgba(92,61,46,0.08);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%235C3D2E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            border-color: rgba(92,61,46,0.25); color: var(--primary);
+        }
+        #lang-select:hover { background-color: rgba(255,255,255,0.28); }
+        .navbar.scrolled #lang-select:hover { background-color: rgba(92,61,46,0.15); }
+        #lang-select option { background: var(--white); color: var(--text-dark); }
+        .goog-te-banner-frame, body > .skiptranslate { display: none !important; }
+        body { top: 0 !important; }
 
         .hero {
             height: 100vh; min-height: 600px;
@@ -248,7 +267,20 @@
 <body>
     <nav class="navbar" id="navbar">
         <a href="#" class="navbar-brand">Nhà Nghỉ Homestay Minh Uyên</a>
-        <a href="tel:+84983550999" class="navbar-cta">Đặt Phòng Ngay</a>
+        <div class="navbar-right">
+            <select id="lang-select" aria-label="Select language">
+                <option value="">🌐 Language</option>
+                <option value="vi">🇻🇳 Tiếng Việt</option>
+                <option value="en">🇬🇧 English</option>
+                <option value="fr">🇫🇷 Français</option>
+                <option value="zh-CN">🇨🇳 中文</option>
+                <option value="ko">🇰🇷 한국어</option>
+                <option value="ja">🇯🇵 日本語</option>
+                <option value="ru">🇷🇺 Русский</option>
+            </select>
+            <div id="google_translate_element" style="display:none"></div>
+            <a href="tel:+84983550999" class="navbar-cta">Đặt Phòng Ngay</a>
+        </div>
     </nav>
 
     <section class="hero">
@@ -418,14 +450,14 @@
             </div>
             <div class="footer-section">
                 <h3>Liên Hệ</h3>
-                <div class="contact-item"><span>📍</span><p>Địa chỉ: 999 Ấp Ranh Hạt, Bình Giang, Hòn Đất, Kiên Giang 920000, Vietnam</p></div>
+                <div class="contact-item"><span>📍</span><p>Địa chỉ: 999 Ấp Ranh Hạt, Bình Giang, An Giang, Việt Nam</p></div>
                 <div class="contact-item"><span>📞</span><a href="tel:+84983550999">0983 550 999</a></div>
                 <div class="contact-item"><span>💬</span><a href="https://zalo.me/84983550999">Zalo: 0983 550 999</a></div>
             </div>
             <div class="footer-section">
                 <h3>Bản Đồ</h3>
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3925.418026241483!2d104.7866663!3d10.3083914!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3109e3f3178d15f9%3A0xc64fca77b059b7f1!2zTmjDoCBOZ2jhu4kgSG9tZXN0YXkgTWluaCBVecOqbg!5e0!3m2!1sen!2sus!4v1771565946286!5m2!1sen!2sus" width="100%" height="200" style="border:0; border-radius:8px; margin-top:8px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                <p style="margin-top:10px;"><a href="https://maps.app.goo.gl/Hc5dQv85HsKFdFHh6" target="_blank" style="color:var(--accent);text-decoration:underline;">🗺️ Google Maps</a></p>
+                <p style="margin-top:10px;"><a href="https://maps.app.goo.gl/Hc5dQv85HsKFdFHh6" target="_blank" style="color:var(--accent);text-decoration:underline;">🗺️ Hướng dẫn chỉ đường</a></p>
             </div>
         </div>
         <div class="footer-bottom"><p>&copy; 2025 Minh Uyên Homestay. All Rights Reserved.</p></div>
@@ -493,6 +525,47 @@
                 const diff = touchX - e.changedTouches[0].screenX;
                 if (Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
             }, { passive: true });
+        });
+    </script>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'vi',
+                includedLanguages: 'en,fr,zh-CN,ko,ja,ru',
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>
+        document.getElementById('lang-select').addEventListener('change', function () {
+            var lang = this.value;
+            if (!lang) return;
+
+            // Vietnamese = reset to original language
+            if (lang === 'vi') {
+                var iframe = document.querySelector('.goog-te-banner-frame');
+                if (iframe) {
+                    var restoreBtn = iframe.contentDocument && iframe.contentDocument.querySelector('.goog-close-link');
+                    if (restoreBtn) restoreBtn.click();
+                }
+                document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + location.hostname + ';';
+                window.location.reload();
+                return;
+            }
+
+            var attempts = 0;
+            var interval = setInterval(function () {
+                var gtSelect = document.querySelector('.goog-te-combo');
+                if (gtSelect) {
+                    clearInterval(interval);
+                    gtSelect.value = lang;
+                    gtSelect.dispatchEvent(new Event('change'));
+                } else if (++attempts > 20) {
+                    clearInterval(interval);
+                }
+            }, 200);
         });
     </script>
 </body>
